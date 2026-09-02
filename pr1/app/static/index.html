@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>PR1 Weather</title>
+<style>
+body { font-family: sans-serif; max-width: 500px; margin: 40px auto; padding: 0 16px; }
+input { padding: 8px; font-size: 16px; width: 250px; }
+button { padding: 8px 16px; font-size: 16px; }
+#result { margin-top: 20px; font-size: 18px; }
+#error { color: #b00020; margin-top: 20px; }
+</style>
+</head>
+<body>
+<h1>Погода за назвою міста</h1>
+
+<input type="text" id="city" placeholder="Kyiv">
+<button id="submit">Показати</button>
+
+<div id="result"></div>
+<div id="error"></div>
+
+<script>
+const cityInput = document.getElementById("city");
+const submitBtn = document.getElementById("submit");
+const result = document.getElementById("result");
+const error = document.getElementById("error");
+
+submitBtn.addEventListener("click", fetchWeather);
+cityInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") fetchWeather();
+});
+
+async function fetchWeather() {
+  const city = cityInput.value.trim();
+  result.textContent = "";
+  error.textContent = "";
+
+  if (!city) {
+    error.textContent = "Введіть назву міста";
+    return;
+  }
+
+  let response;
+  try {
+    response = await fetch(`/weather?city=${encodeURIComponent(city)}`);
+  } catch (e) {
+    error.textContent = "Мережева помилка: " + e.message;
+    return;
+  }
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    error.textContent = data.detail || `Помилка ${response.status}`;
+    return;
+  }
+
+  result.textContent = `${data.city}: ${data.temperature_c}°C, вітер ${data.wind_speed_kmh} км/год`;
+}
+</script>
+</body>
+</html>

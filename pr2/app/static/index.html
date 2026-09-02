@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>PR2 Object Detection</title>
+<style>
+body { font-family: sans-serif; max-width: 900px; margin: 40px auto; padding: 0 16px; }
+#dropzone { border: 2px dashed #999; padding: 24px; text-align: center; border-radius: 8px; }
+#preview-wrap { position: relative; display: inline-block; margin-top: 16px; }
+#preview, #overlay { max-width: 100%; }
+#overlay { position: absolute; top: 0; left: 0; }
+table { border-collapse: collapse; width: 100%; margin-top: 16px; }
+th, td { border: 1px solid #ccc; padding: 6px 10px; text-align: left; }
+#meta { margin-top: 12px; font-weight: bold; }
+#error { color: #b00020; margin-top: 12px; }
+label { display: block; margin-top: 16px; }
+</style>
+</head>
+<body>
+<h1>Object Detection (YOLOv8, локальний inference)</h1>
+
+<input type="file" id="fileInput" accept="image/*">
+
+<label>
+Поріг упевненості (confidence): <span id="confValue">0.25</span>
+<input type="range" id="confSlider" min="0" max="1" step="0.01" value="0.25" style="width: 300px;">
+</label>
+
+<div id="error"></div>
+<div id="meta"></div>
+
+<div id="preview-wrap">
+<img id="preview" style="display: none;">
+<canvas id="overlay"></canvas>
+</div>
+
+<table id="resultsTable" style="display: none;">
+<thead>
+<tr><th>Клас</th><th>Confidence</th><th>BBox (x1, y1, x2, y2)</th></tr>
+</thead>
+<tbody id="resultsBody"></tbody>
+</table>
+
+<script>
+const fileInput = document.getElementById("fileInput");
+const confSlider = document.getElementById("confSlider");
+const confValue = document.getElementById("confValue");
+const preview = document.getElementById("preview");
+const overlay = document.getElementById("overlay");
+const errorBox = document.getElementById("error");
+const metaBox = document.getElementById("meta");
+const resultsTable = document.getElementById("resultsTable");
+const resultsBody = document.getElementById("resultsBody");
+
+confSlider.addEventListener("input", () => {
+  confValue.textContent = confSlider.value;
+});
+
+fileInput.addEventListener("change", () => {
+  if (fileInput.files.length > 0) {
+    runDetection(fileInput.files[0]);
+  }
+});
+
+confSlider.addEventListener("change", () => {
+  if (fileInput.files.length > 0) {
+    runDetection(fileInput.files[0]);
+  }
+});
+
+async function runDetection(file) {
+  errorBox.textContent = "";
+  metaBox.textContent = "Обробка...";
+  resultsTable.style.display = "none";
+  resultsBody.innerHTML = "";
+
+  const objectUrl = URL.createObjectURL(file);
+  preview.src = objectUrl;
+  preview.style.display = "block";
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const conf = confSlider.value;
+
+  let response;
+  try {
+    response = await fetch(`/detect?conf=${conf}`, { method: "POST", body: formData });
+  } catch (e) {
+    errorBox.textContent = "Мережева помилка: " + e.message;
+    metaBox.textContent = "";
+    return;
+  }
+
+  if (!response.ok) {
+    const body = await response.json().catch(() => ({}));
+    errorBox.textContent = "Помилка: " + (body.detail || response.status);
+    metaBox.textContent = "";
+    return;
+  }
+
+  const data = await response.json();
+  metaBox.textContent = `Знайдено об'єктів: ${data.count}, час inference: ${data.inference_time_ms} мс`;
+
+  resultsTable.style.display = data.count > 0 ? "table" : "none";
+  for (const obj of data.objects) {
+    const row = document.createElement("tr");
+    row.innerHTML = `<td>${obj.class}</td><td>${obj.confidence}</td><td>${obj.bbox.join(", ")}</td>`;
+    resultsBody.appendChild(row);
+  }
+
+  const draw = () => drawBoxes(data.objects);
+  if (preview.naturalWidth > 0) {
+    draw();
+  } else {
+    preview.onload = draw;
+  }
+}
+
+function drawBoxes(objects) {
+  overlay.width = preview.naturalWidth;
+  overlay.height = preview.naturalHeight;
+
+  const ctx = overlay.getContext("2d");
+  ctx.clearRect(0, 0, overlay.width, overlay.height);
+  ctx.strokeStyle = "#00c853";
+  ctx.lineWidth = 3;
+  ctx.font = "28px sans-serif";
+  ctx.fillStyle = "#00c853";
+
+  for (const obj of objects) {
+    const [x1, y1, x2, y2] = obj.bbox;
+    ctx.strokeRect(x1, y1, x2 - x1, y2 - y1);
+    ctx.fillText(`${obj.class} ${obj.confidence}`, x1 + 2, y1 - 6 < 20 ? y1 + 24 : y1 - 6);
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+[
+  {
+    "image": "images/example1.jpg",
+    "expected_objects": ["person", "dog"]
+  },
+  {
+    "image": "images/example2.jpg",
+    "expected_objects": ["car", "car", "traffic light"]
+  }
+]
