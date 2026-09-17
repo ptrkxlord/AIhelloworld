@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Асистент магазину</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Arial, sans-serif;
+      color: #17202a;
+      background: #f4f7fb;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      box-sizing: border-box;
+    }
+
+    main {
+      width: min(920px, 100%);
+      background: #ffffff;
+      border: 1px solid #d9e2ec;
+      border-radius: 8px;
+      padding: 28px;
+      box-shadow: 0 12px 28px rgba(23, 32, 42, 0.08);
+    }
+
+    h1 {
+      margin: 0 0 20px;
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    label {
+      display: block;
+      margin: 14px 0 8px;
+      font-weight: 700;
+    }
+
+    textarea, input {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #b8c7d9;
+      border-radius: 6px;
+      padding: 12px;
+      font: inherit;
+      background: #ffffff;
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    button {
+      margin-top: 18px;
+      border: 0;
+      border-radius: 6px;
+      padding: 12px 18px;
+      background: #146c94;
+      color: #ffffff;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: wait;
+      opacity: 0.7;
+    }
+
+    section {
+      margin-top: 22px;
+      border-top: 1px solid #d9e2ec;
+      padding-top: 18px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+      color: #52616f;
+      font-size: 14px;
+    }
+
+    .answer {
+      white-space: pre-wrap;
+      line-height: 1.55;
+    }
+
+    .error {
+      color: #9b1c1c;
+      font-weight: 700;
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 16px;
+      }
+
+      main {
+        padding: 20px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Асистент підтримки магазину</h1>
+    <form id="form">
+      <label for="message">Запит клієнта</label>
+      <textarea id="message" required>Чи можу я повернути товар через 10 днів?</textarea>
+
+      <div class="grid">
+        <div>
+          <label for="temperature">Temperature</label>
+          <input id="temperature" type="number" min="0" max="2" step="0.1" value="0.2">
+        </div>
+        <div>
+          <label for="top_p">Top P</label>
+          <input id="top_p" type="number" min="0" max="1" step="0.05" value="0.9">
+        </div>
+        <div>
+          <label for="max_tokens">Max tokens</label>
+          <input id="max_tokens" type="number" min="1" max="4096" step="1" value="500">
+        </div>
+      </div>
+
+      <button id="submit" type="submit">Отримати відповідь</button>
+    </form>
+
+    <section>
+      <div class="meta">
+        <span id="model"></span>
+        <span id="time"></span>
+      </div>
+      <div id="answer" class="answer"></div>
+    </section>
+  </main>
+
+  <script>
+    const form = document.querySelector("#form");
+    const submit = document.querySelector("#submit");
+    const answer = document.querySelector("#answer");
+    const model = document.querySelector("#model");
+    const time = document.querySelector("#time");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      submit.disabled = true;
+      answer.className = "answer";
+      answer.textContent = "Обробка запиту...";
+      model.textContent = "";
+      time.textContent = "";
+
+      const body = {
+        message: document.querySelector("#message").value,
+        temperature: Number(document.querySelector("#temperature").value),
+        top_p: Number(document.querySelector("#top_p").value),
+        max_tokens: Number(document.querySelector("#max_tokens").value)
+      };
+
+      try {
+        const response = await fetch("/ask", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify(body)
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.detail || "Не вдалося отримати відповідь.");
+        }
+        answer.textContent = data.answer;
+        model.textContent = `Модель: ${data.model}`;
+        time.textContent = `Час: ${data.elapsed_ms} мс`;
+      } catch (error) {
+        answer.className = "answer error";
+        answer.textContent = error.message;
+      } finally {
+        submit.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
