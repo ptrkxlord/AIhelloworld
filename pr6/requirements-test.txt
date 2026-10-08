@@ -1,0 +1,8 @@
+fastapi
+httpx
+numpy
+openai
+pydantic
+python-dotenv
+pytest
+ruff

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сузір'я · RAG-помічник</title>
+<style>
+:root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#202722;background:#f5f7f5;color-scheme:light}*{box-sizing:border-box}body{margin:0}header{height:56px;display:flex;align-items:center;gap:10px;padding:0 24px;background:#fff;border-bottom:1px solid #dfe5e0}.mark{width:25px;height:25px;display:grid;place-items:center;border-radius:6px;background:#16745f;color:white;font-weight:700}header strong{font-size:14px}.health{margin-left:auto;color:#68736c;font-size:12px;display:flex;align-items:center;gap:7px}.dot{width:8px;height:8px;border-radius:50%;background:#d19a40}main{max-width:1100px;margin:auto;padding:28px 22px 48px}h1{margin:0 0 18px;font-size:22px;font-weight:650}.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:22px;align-items:start}.primary{min-width:0}form{background:#fff;border:1px solid #dfe5e0;border-radius:6px;padding:14px}textarea{display:block;width:100%;min-height:76px;padding:11px 12px;border:1px solid #d4ddd6;border-radius:4px;font:inherit;font-size:14px;resize:vertical}select:focus,textarea:focus,button:focus-visible{outline:2px solid #16846b;outline-offset:2px}.controls{display:flex;align-items:end;gap:10px;margin-top:11px}.field{display:grid;gap:5px}.field label{font-size:11px;color:#68736c}select{height:34px;min-width:170px;padding:0 9px;border:1px solid #d4ddd6;border-radius:4px;background:white;font:inherit;font-size:12px;color:inherit}button{height:35px;padding:0 15px;border:0;border-radius:4px;background:#16745f;color:white;font:inherit;font-size:13px;font-weight:600;cursor:pointer}button:hover{background:#105f4e}button:disabled{opacity:.6;cursor:wait}.message{min-height:20px;margin:9px 1px;color:#68736c;font-size:12px}.message.error{color:#a83b33}.answer{padding:15px 0 13px;border-bottom:1px solid #dfe5e0}.answer-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}.answer-head h2,.section-head{margin:0;font-size:14px;font-weight:650}.badge{font-size:11px;font-weight:600;color:#16745f}.badge.unknown{color:#a15a29}.answer-text{margin:0;font-size:14px;line-height:1.6;white-space:pre-wrap}.section{padding-top:15px}.section-head{margin-bottom:10px}.source{padding:11px 0;border-top:1px solid #dfe5e0}.source-title{font-size:13px;font-weight:620}.source-meta{margin-top:4px;color:#707b73;font-size:11px}.source-text{margin:8px 0 0;font-size:12px;line-height:1.5;white-space:pre-wrap;color:#424b45}aside{border-left:1px solid #dfe5e0;padding-left:18px}aside h2{font-size:13px;margin:0 0 12px}.metric{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid #e1e6e2;font-size:12px}.metric span:first-child{color:#69746d}.metric strong{font-weight:600;text-align:right}details{margin-top:17px;border-top:1px solid #dfe5e0;padding-top:12px}summary{cursor:pointer;font-size:12px;font-weight:600}pre{overflow:auto;max-height:450px;white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.55 ui-monospace,SFMono-Regular,monospace;color:#3f4942}.empty{padding:14px 0;color:#778078;font-size:12px}@media(max-width:760px){header{padding:0 15px}main{padding:21px 14px 36px}.layout{grid-template-columns:1fr;gap:22px}aside{border-left:0;border-top:1px solid #dfe5e0;padding:15px 0 0}.controls{align-items:stretch;flex-wrap:wrap}.field{flex:1 1 160px}select{width:100%}button{align-self:end}}
+</style>
+</head>
+<body>
+<header><span class="mark">С</span><strong>Сузір'я</strong><span class="health"><i class="dot" id="dot"></i><span id="health">Перевірка бази</span></span></header>
+<main>
+<h1>Помічник з бази знань</h1>
+<div class="layout">
+<section class="primary">
+<form id="form">
+<label for="question" class="field"><span>Запитання</span><textarea id="question" maxlength="2000" required placeholder="Наприклад: скільки триває гарантія на електроніку?"></textarea></label>
+<div class="controls"><div class="field"><label for="product">Товар</label><select id="product"><option value="">Усі товари</option></select></div><button id="submit" type="submit">Запитати</button></div>
+</form>
+<div class="message" id="message" role="status"></div>
+<section class="answer" aria-live="polite"><div class="answer-head"><h2>Відповідь</h2><span class="badge" id="badge"></span></div><p class="answer-text" id="answer">Поставте запитання, щоб отримати відповідь із посиланнями на документи.</p></section>
+<section class="section"><h2 class="section-head">Джерела</h2><div id="sources" class="empty">Джерела з'являться разом із відповіддю.</div></section>
+<details><summary>Контекст, переданий Gemini</summary><pre id="context">Контекст ще не сформовано.</pre></details>
+</section>
+<aside><h2>Параметри запиту</h2><div class="metric"><span>Модель</span><strong id="model">—</strong></div><div class="metric"><span>Пошук</span><strong id="retrieval">—</strong></div><div class="metric"><span>Генерація</span><strong id="generation">—</strong></div><div class="metric"><span>Токени</span><strong id="tokens">—</strong></div><div class="metric"><span>Фрагменти</span><strong id="chunk-limit">—</strong></div><div class="metric"><span>Бюджет контексту</span><strong id="token-budget">—</strong></div></aside>
+</div>
+</main>
+<script>
+const form=document.getElementById("form");
+const button=document.getElementById("submit");
+const message=document.getElementById("message");
+const product=document.getElementById("product");
+
+function showSources(items){
+ const root=document.getElementById("sources");root.replaceChildren();
+ if(!items.length){root.className="empty";root.textContent="Для цієї відповіді джерела не використано.";return}
+ root.className="";
+ for(const item of items){
+  const section=document.createElement("article");section.className="source";
+  const title=document.createElement("div");title.className="source-title";title.textContent=`[${item.id}] ${item.title}`;
+  const meta=document.createElement("div");meta.className="source-meta";meta.textContent=`${item.section} · редакція ${item.revision_date} · оцінка ${item.score}`;
+  const text=document.createElement("p");text.className="source-text";text.textContent=item.text;
+  section.append(title,meta,text);root.append(section);
+ }
+}
+
+async function initialize(){
+ const response=await fetch("/api/status");const data=await response.json();
+ document.getElementById("health").textContent=data.ready?(data.api_key_configured?"База готова":"Потрібен ключ Gemini"):data.message;
+ document.getElementById("dot").style.background=data.ready?(data.api_key_configured?"#27865f":"#d19a40"):"#bd5549";
+ document.getElementById("model").textContent=data.model;
+ document.getElementById("chunk-limit").textContent=data.context_chunk_limit;
+ document.getElementById("token-budget").textContent=`${data.context_token_budget} оцінкових`;
+ for(const value of data.products){const option=document.createElement("option");option.value=value;option.textContent=value;product.append(option)}
+ if(!data.ready){message.textContent=data.message;message.className="message error"}
+}
+
+form.addEventListener("submit",async event=>{
+ event.preventDefault();button.disabled=true;message.className="message";message.textContent="Шукаю відповідь у базі…";
+ try{
+  const response=await fetch("/api/ask",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({question:document.getElementById("question").value,product:product.value||null})});
+  const result=await response.json();
+  if(!response.ok){const detail=result.detail;if(detail?.diagnostics){const info=detail.diagnostics;document.getElementById("context").textContent=info.context||"";showSources(info.sources||[]);document.getElementById("retrieval").textContent=`${info.retrieval_ms} мс`;document.getElementById("generation").textContent="Не виконано";document.getElementById("model").textContent=info.model||"—"}throw new Error(detail?.message||detail||`Помилка ${response.status}`)}
+  document.getElementById("answer").textContent=result.answer;
+  const badge=document.getElementById("badge");badge.textContent=result.found?"За базою знань":"Відповіді немає";badge.className=`badge${result.found?"":" unknown"}`;
+  showSources(result.sources);document.getElementById("context").textContent=result.context||"Контекст не передавався.";
+  document.getElementById("model").textContent=result.model||"—";document.getElementById("retrieval").textContent=`${result.retrieval_ms} мс`;document.getElementById("generation").textContent=`${result.generation_ms} мс`;
+  document.getElementById("tokens").textContent=result.tokens?`${result.tokens.prompt} + ${result.tokens.completion} = ${result.tokens.total}`:"—";
+  message.textContent=result.validation==="ok"?"Відповідь перевірено за джерелами.":"Відповідь без підтвердження у базі.";
+ }catch(error){message.textContent=error.message;message.className="message error"}
+ finally{button.disabled=false}
+});
+
+initialize().catch(()=>{message.textContent="Не вдалося завантажити стан застосунку.";message.className="message error"});
+</script>
+</body>
+</html>

@@ -7,3 +7,4 @@ __pycache__/
 .env.local
 .pytest_cache/
 pr5/data/index/
+pr6/data/index/
