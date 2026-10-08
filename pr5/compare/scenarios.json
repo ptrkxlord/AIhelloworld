@@ -1,0 +1,17 @@
+[
+  {"id":"q01","type":"точний артикул","query":"NA-100","expected":"headphones.md","filters":{}},
+  {"id":"q02","type":"синонім","query":"Коли привезуть мою посилку?","expected":"delivery_current.md","filters":{"status":"чинний"}},
+  {"id":"q03","type":"словоформа","query":"Повернення коштів за несправний товар","expected":"returns.md","filters":{}},
+  {"id":"q04","type":"перефразування","query":"Як обнулити і заново зв'язати навушники з телефоном?","expected":"earbuds.md","filters":{"product":"Nova Buds"}},
+  {"id":"q05","type":"інша мова","query":"How long does the warranty last for electronics?","expected":"warranty.md","filters":{}},
+  {"id":"q06","type":"описка","query":"навушники не заряжяються","expected":"headphones.md","filters":{"product":"Nova Air"}},
+  {"id":"q07","type":"чинна й архівна редакції","query":"Яка зараз ціна кур'єрської доставки по Києву?","expected":"delivery_current.md","filters":{"status":"чинний"}},
+  {"id":"q08","type":"внутрішній документ","query":"Що звірити перед зміною адреси замовлення?","expected":"operator_internal.md","filters":{"audience":"персонал"}},
+  {"id":"q09","type":"фільтр за товаром","query":"Індикатор показує повний заряд футляра","expected":"earbuds.md","filters":{"product":"Nova Buds"}},
+  {"id":"q10","type":"довге питання","query":"Я отримав замовлення, коробка пом'ята, кур'єр уже поїхав, а тепер не знаю, чи можу довести пошкодження і куди звернутися, щоб повернути гроші","expected":"delivery_current.md","filters":{}},
+  {"id":"q11","type":"поза колекцією","query":"Яка погода буде завтра у Львові?","expected":null,"filters":{}},
+  {"id":"q12","type":"код моделі","query":"USB-C, дві години і червоний індикатор","expected":"headphones.md","filters":{"product":"Nova Air"}},
+  {"id":"q13","type":"точна умова","query":"Чи безкоштовна доставка від трьох тисяч гривень?","expected":"delivery_current.md","filters":{"status":"чинний"}},
+  {"id":"q14","type":"графік роботи","query":"Are support agents available on Sunday?","expected":"stores.md","filters":{}},
+  {"id":"q15","type":"код і конфіденційність","query":"Магазин просить продиктувати CVV та одноразовий код","expected":"privacy.md","filters":{}}
+]

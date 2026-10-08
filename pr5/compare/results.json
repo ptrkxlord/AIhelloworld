@@ -1,0 +1,1061 @@
+{
+  "model": "intfloat/multilingual-e5-small",
+  "scenario_count": 15,
+  "baseline": {
+    "label": "базовий",
+    "chunk_size": 900,
+    "chunk_count": 36,
+    "summary": {
+      "semantic": {
+        "hit_at_1": 0.929,
+        "hit_at_3": 1.0,
+        "mean_latency_ms": 9.46,
+        "positive_top_scores": [
+          0.8143,
+          0.8417,
+          0.8819,
+          0.8714,
+          0.8388,
+          0.8714,
+          0.8563,
+          0.8973,
+          0.8655,
+          0.8641,
+          0.8874,
+          0.8687,
+          0.791,
+          0.8756
+        ],
+        "out_of_collection_top_scores": [
+          0.7765
+        ],
+        "out_of_collection_returned": 0
+      },
+      "keyword": {
+        "hit_at_1": 0.643,
+        "hit_at_3": 0.786,
+        "mean_latency_ms": 0.23,
+        "positive_top_scores": [
+          3.0317,
+          3.3019,
+          7.8709,
+          0.8198,
+          0.0,
+          0.8886,
+          5.4398,
+          2.7726,
+          2.5847,
+          5.9482,
+          3.9701,
+          8.2328,
+          0.0,
+          13.5817
+        ],
+        "out_of_collection_top_scores": [
+          1.5618
+        ],
+        "out_of_collection_returned": 1
+      }
+    },
+    "queries": {
+      "semantic": [
+        {
+          "id": "q01",
+          "type": "точний артикул",
+          "expected": "headphones.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8143,
+          "score_above_expected": null,
+          "latency_ms": 24.66,
+          "top_sources": [
+            "headphones.md"
+          ]
+        },
+        {
+          "id": "q02",
+          "type": "синонім",
+          "expected": "delivery_current.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8417,
+          "score_above_expected": null,
+          "latency_ms": 10.48,
+          "top_sources": [
+            "delivery_current.md",
+            "tracking.md",
+            "orders.md",
+            "stores.md",
+            "payment.md"
+          ]
+        },
+        {
+          "id": "q03",
+          "type": "словоформа",
+          "expected": "returns.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8819,
+          "score_above_expected": null,
+          "latency_ms": 8.97,
+          "top_sources": [
+            "returns.md",
+            "operator_internal.md",
+            "warranty.md",
+            "service_centers.md",
+            "delivery_current.md"
+          ]
+        },
+        {
+          "id": "q04",
+          "type": "перефразування",
+          "expected": "earbuds.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8714,
+          "score_above_expected": null,
+          "latency_ms": 9.0,
+          "top_sources": [
+            "earbuds.md"
+          ]
+        },
+        {
+          "id": "q05",
+          "type": "інша мова",
+          "expected": "warranty.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8388,
+          "score_above_expected": null,
+          "latency_ms": 8.92,
+          "top_sources": [
+            "warranty.md",
+            "returns.md",
+            "headphones.md",
+            "watch.md",
+            "earbuds.md"
+          ]
+        },
+        {
+          "id": "q06",
+          "type": "описка",
+          "expected": "headphones.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8714,
+          "score_above_expected": null,
+          "latency_ms": 8.86,
+          "top_sources": [
+            "headphones.md"
+          ]
+        },
+        {
+          "id": "q07",
+          "type": "чинна й архівна редакції",
+          "expected": "delivery_current.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8563,
+          "score_above_expected": null,
+          "latency_ms": 7.25,
+          "top_sources": [
+            "delivery_current.md",
+            "stores.md",
+            "payment.md",
+            "service_centers.md",
+            "orders.md"
+          ]
+        },
+        {
+          "id": "q08",
+          "type": "внутрішній документ",
+          "expected": "operator_internal.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8973,
+          "score_above_expected": null,
+          "latency_ms": 7.62,
+          "top_sources": [
+            "operator_internal.md"
+          ]
+        },
+        {
+          "id": "q09",
+          "type": "фільтр за товаром",
+          "expected": "earbuds.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8655,
+          "score_above_expected": null,
+          "latency_ms": 10.0,
+          "top_sources": [
+            "earbuds.md"
+          ]
+        },
+        {
+          "id": "q10",
+          "type": "довге питання",
+          "expected": "delivery_current.md",
+          "rank": 2,
+          "hit_at_1": false,
+          "hit_at_3": true,
+          "top_score": 0.8641,
+          "score_above_expected": 0.8641,
+          "latency_ms": 7.75,
+          "top_sources": [
+            "returns.md",
+            "delivery_current.md",
+            "warranty.md",
+            "orders.md",
+            "promo.md"
+          ]
+        },
+        {
+          "id": "q11",
+          "type": "поза колекцією",
+          "expected": null,
+          "rank": null,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.7765,
+          "score_above_expected": null,
+          "latency_ms": 9.47,
+          "top_sources": []
+        },
+        {
+          "id": "q12",
+          "type": "код моделі",
+          "expected": "headphones.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8874,
+          "score_above_expected": null,
+          "latency_ms": 6.51,
+          "top_sources": [
+            "headphones.md"
+          ]
+        },
+        {
+          "id": "q13",
+          "type": "точна умова",
+          "expected": "delivery_current.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8687,
+          "score_above_expected": null,
+          "latency_ms": 6.54,
+          "top_sources": [
+            "delivery_current.md",
+            "payment.md",
+            "privacy.md",
+            "service_centers.md",
+            "tracking.md"
+          ]
+        },
+        {
+          "id": "q14",
+          "type": "графік роботи",
+          "expected": "stores.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.791,
+          "score_above_expected": null,
+          "latency_ms": 8.82,
+          "top_sources": [
+            "stores.md"
+          ]
+        },
+        {
+          "id": "q15",
+          "type": "код і конфіденційність",
+          "expected": "privacy.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8756,
+          "score_above_expected": null,
+          "latency_ms": 7.09,
+          "top_sources": [
+            "privacy.md",
+            "operator_internal.md",
+            "service_centers.md",
+            "warranty.md",
+            "promo.md"
+          ]
+        }
+      ],
+      "keyword": [
+        {
+          "id": "q01",
+          "type": "точний артикул",
+          "expected": "headphones.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 3.0317,
+          "score_above_expected": null,
+          "latency_ms": 0.51,
+          "top_sources": [
+            "headphones.md"
+          ]
+        },
+        {
+          "id": "q02",
+          "type": "синонім",
+          "expected": "delivery_current.md",
+          "rank": 3,
+          "hit_at_1": false,
+          "hit_at_3": true,
+          "top_score": 3.3019,
+          "score_above_expected": 2.6721,
+          "latency_ms": 0.33,
+          "top_sources": [
+            "earbuds.md",
+            "orders.md",
+            "delivery_current.md"
+          ]
+        },
+        {
+          "id": "q03",
+          "type": "словоформа",
+          "expected": "returns.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 7.8709,
+          "score_above_expected": null,
+          "latency_ms": 0.33,
+          "top_sources": [
+            "returns.md",
+            "operator_internal.md",
+            "service_centers.md",
+            "earbuds.md",
+            "tracking.md"
+          ]
+        },
+        {
+          "id": "q04",
+          "type": "перефразування",
+          "expected": "earbuds.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8198,
+          "score_above_expected": null,
+          "latency_ms": 0.06,
+          "top_sources": [
+            "earbuds.md"
+          ]
+        },
+        {
+          "id": "q05",
+          "type": "інша мова",
+          "expected": "warranty.md",
+          "rank": null,
+          "hit_at_1": false,
+          "hit_at_3": false,
+          "top_score": 0.0,
+          "score_above_expected": null,
+          "latency_ms": 0.33,
+          "top_sources": []
+        },
+        {
+          "id": "q06",
+          "type": "описка",
+          "expected": "headphones.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8886,
+          "score_above_expected": null,
+          "latency_ms": 0.05,
+          "top_sources": [
+            "headphones.md"
+          ]
+        },
+        {
+          "id": "q07",
+          "type": "чинна й архівна редакції",
+          "expected": "delivery_current.md",
+          "rank": 2,
+          "hit_at_1": false,
+          "hit_at_3": true,
+          "top_score": 5.4398,
+          "score_above_expected": 5.4398,
+          "latency_ms": 0.3,
+          "top_sources": [
+            "privacy.md",
+            "delivery_current.md"
+          ]
+        },
+        {
+          "id": "q08",
+          "type": "внутрішній документ",
+          "expected": "operator_internal.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 2.7726,
+          "score_above_expected": null,
+          "latency_ms": 0.04,
+          "top_sources": [
+            "operator_internal.md"
+          ]
+        },
+        {
+          "id": "q09",
+          "type": "фільтр за товаром",
+          "expected": "earbuds.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 2.5847,
+          "score_above_expected": null,
+          "latency_ms": 0.04,
+          "top_sources": [
+            "earbuds.md"
+          ]
+        },
+        {
+          "id": "q10",
+          "type": "довге питання",
+          "expected": "delivery_current.md",
+          "rank": 5,
+          "hit_at_1": false,
+          "hit_at_3": false,
+          "top_score": 5.9482,
+          "score_above_expected": 4.2846,
+          "latency_ms": 0.36,
+          "top_sources": [
+            "returns.md",
+            "privacy.md",
+            "warranty.md",
+            "orders.md",
+            "delivery_current.md"
+          ]
+        },
+        {
+          "id": "q11",
+          "type": "поза колекцією",
+          "expected": null,
+          "rank": null,
+          "hit_at_1": false,
+          "hit_at_3": false,
+          "top_score": 1.5618,
+          "score_above_expected": null,
+          "latency_ms": 0.27,
+          "top_sources": [
+            "stores.md",
+            "earbuds.md",
+            "delivery_archive.md",
+            "promo.md",
+            "tracking.md"
+          ]
+        },
+        {
+          "id": "q12",
+          "type": "код моделі",
+          "expected": "headphones.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 3.9701,
+          "score_above_expected": null,
+          "latency_ms": 0.05,
+          "top_sources": [
+            "headphones.md"
+          ]
+        },
+        {
+          "id": "q13",
+          "type": "точна умова",
+          "expected": "delivery_current.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 8.2328,
+          "score_above_expected": null,
+          "latency_ms": 0.26,
+          "top_sources": [
+            "delivery_current.md",
+            "speaker.md",
+            "returns.md",
+            "service_centers.md",
+            "orders.md"
+          ]
+        },
+        {
+          "id": "q14",
+          "type": "графік роботи",
+          "expected": "stores.md",
+          "rank": null,
+          "hit_at_1": false,
+          "hit_at_3": false,
+          "top_score": 0.0,
+          "score_above_expected": null,
+          "latency_ms": 0.29,
+          "top_sources": []
+        },
+        {
+          "id": "q15",
+          "type": "код і конфіденційність",
+          "expected": "privacy.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 13.5817,
+          "score_above_expected": null,
+          "latency_ms": 0.27,
+          "top_sources": [
+            "privacy.md",
+            "promo.md",
+            "watch.md",
+            "orders.md",
+            "returns.md"
+          ]
+        }
+      ]
+    }
+  },
+  "changed": {
+    "label": "фрагмент 200 символів",
+    "chunk_size": 200,
+    "chunk_count": 53,
+    "summary": {
+      "semantic": {
+        "hit_at_1": 0.929,
+        "hit_at_3": 1.0,
+        "mean_latency_ms": 7.35,
+        "positive_top_scores": [
+          0.8167,
+          0.844,
+          0.8803,
+          0.8705,
+          0.8388,
+          0.8683,
+          0.8555,
+          0.8966,
+          0.8655,
+          0.8749,
+          0.8821,
+          0.8738,
+          0.791,
+          0.8756
+        ],
+        "out_of_collection_top_scores": [
+          0.7765
+        ],
+        "out_of_collection_returned": 0
+      },
+      "keyword": {
+        "hit_at_1": 0.714,
+        "hit_at_3": 0.786,
+        "mean_latency_ms": 0.25,
+        "positive_top_scores": [
+          3.3394,
+          3.4793,
+          7.2837,
+          0.6059,
+          0.0,
+          0.9327,
+          6.2447,
+          3.9571,
+          3.163,
+          5.1456,
+          3.7176,
+          7.7643,
+          0.0,
+          14.472
+        ],
+        "out_of_collection_top_scores": [
+          1.7172
+        ],
+        "out_of_collection_returned": 1
+      }
+    },
+    "queries": {
+      "semantic": [
+        {
+          "id": "q01",
+          "type": "точний артикул",
+          "expected": "headphones.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8167,
+          "score_above_expected": null,
+          "latency_ms": 9.11,
+          "top_sources": [
+            "headphones.md",
+            "warranty.md"
+          ]
+        },
+        {
+          "id": "q02",
+          "type": "синонім",
+          "expected": "delivery_current.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.844,
+          "score_above_expected": null,
+          "latency_ms": 7.99,
+          "top_sources": [
+            "delivery_current.md",
+            "tracking.md",
+            "orders.md",
+            "stores.md",
+            "payment.md"
+          ]
+        },
+        {
+          "id": "q03",
+          "type": "словоформа",
+          "expected": "returns.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8803,
+          "score_above_expected": null,
+          "latency_ms": 8.18,
+          "top_sources": [
+            "returns.md",
+            "operator_internal.md",
+            "warranty.md",
+            "orders.md",
+            "service_centers.md"
+          ]
+        },
+        {
+          "id": "q04",
+          "type": "перефразування",
+          "expected": "earbuds.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8705,
+          "score_above_expected": null,
+          "latency_ms": 6.85,
+          "top_sources": [
+            "earbuds.md"
+          ]
+        },
+        {
+          "id": "q05",
+          "type": "інша мова",
+          "expected": "warranty.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8388,
+          "score_above_expected": null,
+          "latency_ms": 6.41,
+          "top_sources": [
+            "warranty.md",
+            "returns.md",
+            "watch.md",
+            "headphones.md",
+            "earbuds.md"
+          ]
+        },
+        {
+          "id": "q06",
+          "type": "описка",
+          "expected": "headphones.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8683,
+          "score_above_expected": null,
+          "latency_ms": 7.4,
+          "top_sources": [
+            "headphones.md"
+          ]
+        },
+        {
+          "id": "q07",
+          "type": "чинна й архівна редакції",
+          "expected": "delivery_current.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8555,
+          "score_above_expected": null,
+          "latency_ms": 6.29,
+          "top_sources": [
+            "delivery_current.md",
+            "stores.md",
+            "payment.md",
+            "orders.md",
+            "service_centers.md"
+          ]
+        },
+        {
+          "id": "q08",
+          "type": "внутрішній документ",
+          "expected": "operator_internal.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8966,
+          "score_above_expected": null,
+          "latency_ms": 6.25,
+          "top_sources": [
+            "operator_internal.md"
+          ]
+        },
+        {
+          "id": "q09",
+          "type": "фільтр за товаром",
+          "expected": "earbuds.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8655,
+          "score_above_expected": null,
+          "latency_ms": 8.21,
+          "top_sources": [
+            "earbuds.md"
+          ]
+        },
+        {
+          "id": "q10",
+          "type": "довге питання",
+          "expected": "delivery_current.md",
+          "rank": 3,
+          "hit_at_1": false,
+          "hit_at_3": true,
+          "top_score": 0.8749,
+          "score_above_expected": 0.8705,
+          "latency_ms": 6.9,
+          "top_sources": [
+            "returns.md",
+            "orders.md",
+            "delivery_current.md",
+            "warranty.md",
+            "operator_internal.md"
+          ]
+        },
+        {
+          "id": "q11",
+          "type": "поза колекцією",
+          "expected": null,
+          "rank": null,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.7765,
+          "score_above_expected": null,
+          "latency_ms": 8.37,
+          "top_sources": []
+        },
+        {
+          "id": "q12",
+          "type": "код моделі",
+          "expected": "headphones.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8821,
+          "score_above_expected": null,
+          "latency_ms": 6.34,
+          "top_sources": [
+            "headphones.md"
+          ]
+        },
+        {
+          "id": "q13",
+          "type": "точна умова",
+          "expected": "delivery_current.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8738,
+          "score_above_expected": null,
+          "latency_ms": 6.82,
+          "top_sources": [
+            "delivery_current.md",
+            "payment.md",
+            "stores.md",
+            "returns.md",
+            "privacy.md"
+          ]
+        },
+        {
+          "id": "q14",
+          "type": "графік роботи",
+          "expected": "stores.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.791,
+          "score_above_expected": null,
+          "latency_ms": 7.96,
+          "top_sources": [
+            "stores.md"
+          ]
+        },
+        {
+          "id": "q15",
+          "type": "код і конфіденційність",
+          "expected": "privacy.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.8756,
+          "score_above_expected": null,
+          "latency_ms": 7.21,
+          "top_sources": [
+            "privacy.md",
+            "operator_internal.md",
+            "orders.md",
+            "service_centers.md",
+            "returns.md"
+          ]
+        }
+      ],
+      "keyword": [
+        {
+          "id": "q01",
+          "type": "точний артикул",
+          "expected": "headphones.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 3.3394,
+          "score_above_expected": null,
+          "latency_ms": 0.36,
+          "top_sources": [
+            "headphones.md"
+          ]
+        },
+        {
+          "id": "q02",
+          "type": "синонім",
+          "expected": "delivery_current.md",
+          "rank": 2,
+          "hit_at_1": false,
+          "hit_at_3": true,
+          "top_score": 3.4793,
+          "score_above_expected": 3.4793,
+          "latency_ms": 0.34,
+          "top_sources": [
+            "earbuds.md",
+            "delivery_current.md",
+            "orders.md"
+          ]
+        },
+        {
+          "id": "q03",
+          "type": "словоформа",
+          "expected": "returns.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 7.2837,
+          "score_above_expected": null,
+          "latency_ms": 0.36,
+          "top_sources": [
+            "returns.md",
+            "service_centers.md",
+            "operator_internal.md",
+            "orders.md",
+            "earbuds.md"
+          ]
+        },
+        {
+          "id": "q04",
+          "type": "перефразування",
+          "expected": "earbuds.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.6059,
+          "score_above_expected": null,
+          "latency_ms": 0.05,
+          "top_sources": [
+            "earbuds.md"
+          ]
+        },
+        {
+          "id": "q05",
+          "type": "інша мова",
+          "expected": "warranty.md",
+          "rank": null,
+          "hit_at_1": false,
+          "hit_at_3": false,
+          "top_score": 0.0,
+          "score_above_expected": null,
+          "latency_ms": 0.33,
+          "top_sources": []
+        },
+        {
+          "id": "q06",
+          "type": "описка",
+          "expected": "headphones.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 0.9327,
+          "score_above_expected": null,
+          "latency_ms": 0.06,
+          "top_sources": [
+            "headphones.md"
+          ]
+        },
+        {
+          "id": "q07",
+          "type": "чинна й архівна редакції",
+          "expected": "delivery_current.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 6.2447,
+          "score_above_expected": null,
+          "latency_ms": 0.33,
+          "top_sources": [
+            "delivery_current.md",
+            "privacy.md"
+          ]
+        },
+        {
+          "id": "q08",
+          "type": "внутрішній документ",
+          "expected": "operator_internal.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 3.9571,
+          "score_above_expected": null,
+          "latency_ms": 0.05,
+          "top_sources": [
+            "operator_internal.md"
+          ]
+        },
+        {
+          "id": "q09",
+          "type": "фільтр за товаром",
+          "expected": "earbuds.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 3.163,
+          "score_above_expected": null,
+          "latency_ms": 0.06,
+          "top_sources": [
+            "earbuds.md"
+          ]
+        },
+        {
+          "id": "q10",
+          "type": "довге питання",
+          "expected": "delivery_current.md",
+          "rank": 5,
+          "hit_at_1": false,
+          "hit_at_3": false,
+          "top_score": 5.1456,
+          "score_above_expected": 4.3654,
+          "latency_ms": 0.41,
+          "top_sources": [
+            "warranty.md",
+            "privacy.md",
+            "orders.md",
+            "returns.md",
+            "delivery_current.md"
+          ]
+        },
+        {
+          "id": "q11",
+          "type": "поза колекцією",
+          "expected": null,
+          "rank": null,
+          "hit_at_1": false,
+          "hit_at_3": false,
+          "top_score": 1.7172,
+          "score_above_expected": null,
+          "latency_ms": 0.34,
+          "top_sources": [
+            "stores.md",
+            "earbuds.md",
+            "delivery_current.md",
+            "delivery_archive.md",
+            "headphones.md"
+          ]
+        },
+        {
+          "id": "q12",
+          "type": "код моделі",
+          "expected": "headphones.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 3.7176,
+          "score_above_expected": null,
+          "latency_ms": 0.06,
+          "top_sources": [
+            "headphones.md"
+          ]
+        },
+        {
+          "id": "q13",
+          "type": "точна умова",
+          "expected": "delivery_current.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 7.7643,
+          "score_above_expected": null,
+          "latency_ms": 0.35,
+          "top_sources": [
+            "delivery_current.md",
+            "speaker.md",
+            "returns.md",
+            "orders.md",
+            "service_centers.md"
+          ]
+        },
+        {
+          "id": "q14",
+          "type": "графік роботи",
+          "expected": "stores.md",
+          "rank": null,
+          "hit_at_1": false,
+          "hit_at_3": false,
+          "top_score": 0.0,
+          "score_above_expected": null,
+          "latency_ms": 0.34,
+          "top_sources": []
+        },
+        {
+          "id": "q15",
+          "type": "код і конфіденційність",
+          "expected": "privacy.md",
+          "rank": 1,
+          "hit_at_1": true,
+          "hit_at_3": true,
+          "top_score": 14.472,
+          "score_above_expected": null,
+          "latency_ms": 0.36,
+          "top_sources": [
+            "privacy.md",
+            "promo.md",
+            "watch.md",
+            "orders.md",
+            "returns.md"
+          ]
+        }
+      ]
+    }
+  }
+}
