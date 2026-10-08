@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сузір'я — пошук у базі знань</title>
+<style>
+:root { color-scheme: light; font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #202522; background: #f5f7f5; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+header { height: 58px; display: flex; align-items: center; gap: 12px; padding: 0 28px; background: #fff; border-bottom: 1px solid #dfe5e0; }
+.mark { width: 25px; height: 25px; border-radius: 7px; display: grid; place-items: center; background: #147d64; color: #fff; font-size: 15px; font-weight: 700; }
+header strong { font-size: 15px; font-weight: 650; }
+.state { margin-left: auto; display: flex; align-items: center; gap: 8px; color: #647069; font-size: 12px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: #d28b28; }
+main { max-width: 1240px; margin: 0 auto; padding: 28px 24px 48px; }
+h1 { margin: 0 0 5px; font-size: 22px; font-weight: 650; }
+.subtitle { margin: 0 0 22px; color: #69736d; font-size: 13px; }
+.searchbox { padding: 16px; background: #fff; border: 1px solid #dfe5e0; border-radius: 7px; }
+textarea { display: block; width: 100%; min-height: 72px; resize: vertical; border: 1px solid #d6ded8; border-radius: 5px; padding: 11px 12px; font: inherit; font-size: 14px; outline: none; }
+textarea:focus, select:focus, input:focus { border-color: #17856a; box-shadow: 0 0 0 2px #17856a20; }
+.controls { display: flex; align-items: end; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.field { display: grid; gap: 5px; min-width: 130px; }
+.field label { color: #69736d; font-size: 11px; }
+select, input[type=number] { height: 34px; min-width: 130px; border: 1px solid #d6ded8; border-radius: 5px; padding: 0 9px; background: #fff; color: inherit; font: inherit; font-size: 12px; }
+input[type=number] { width: 92px; min-width: 92px; }
+button { height: 35px; padding: 0 15px; border: 0; border-radius: 5px; background: #147d64; color: white; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+button:hover { background: #0e6853; }
+button:disabled { opacity: .55; cursor: wait; }
+#message { min-height: 20px; margin: 10px 1px 0; color: #69736d; font-size: 12px; }
+#message.error { color: #b33f36; }
+.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px; align-items: start; }
+.column { min-width: 0; }
+.column-head { display: flex; align-items: center; gap: 8px; padding: 0 2px 9px; }
+.column-head h2 { margin: 0; font-size: 14px; font-weight: 650; }
+.column-head span { color: #758078; font-size: 11px; }
+.result { margin-bottom: 9px; padding: 13px; border: 1px solid #dfe5e0; border-radius: 6px; background: #fff; }
+.result-top { display: flex; align-items: start; justify-content: space-between; gap: 10px; }
+.result-title { font-size: 13px; line-height: 1.35; font-weight: 650; }
+.score { flex: 0 0 auto; color: #147d64; font-size: 12px; font-variant-numeric: tabular-nums; font-weight: 650; }
+.source { margin: 5px 0 8px; color: #77817b; font-size: 11px; }
+.excerpt { margin: 0; color: #3c4640; font-size: 12px; line-height: 1.55; white-space: pre-wrap; }
+.tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+.tag { padding: 3px 6px; border-radius: 3px; background: #eef4f0; color: #526258; font-size: 10px; }
+.empty { padding: 17px 12px; border: 1px dashed #ccd6cf; border-radius: 5px; color: #77817b; font-size: 12px; text-align: center; }
+@media (max-width: 760px) { header { padding: 0 16px; } main { padding: 22px 14px 36px; } .columns { grid-template-columns: 1fr; gap: 20px; } .searchbox { padding: 12px; } .field { flex: 1 1 135px; } .field select { width: 100%; } }
+</style>
+</head>
+<body>
+<header><span class="mark">С</span><strong>Сузір'я</strong><span class="state"><i class="dot" id="dot"></i><span id="status">Перевірка індексу</span></span></header>
+<main>
+  <h1>Пошук у базі знань</h1>
+  <p class="subtitle">Семантичний пошук і пошук за словами по документах магазину</p>
+  <form class="searchbox" id="form">
+    <textarea id="query" placeholder="Наприклад: як довго повертатимуть оплату за несправний товар?" required></textarea>
+    <div class="controls">
+      <div class="field"><label for="category">Категорія</label><select id="category"><option value="">Усі</option></select></div>
+      <div class="field"><label for="product">Товар</label><select id="product"><option value="">Усі</option></select></div>
+      <div class="field"><label for="audience">Аудиторія</label><select id="audience"><option value="">Усі</option></select></div>
+      <div class="field"><label for="statusFilter">Статус</label><select id="statusFilter"><option value="">Усі</option></select></div>
+      <div class="field"><label for="topK">Результатів</label><input id="topK" type="number" min="1"></div>
+      <div class="field"><label for="threshold">Поріг semantic</label><input id="threshold" type="number" min="-1" max="1" step="0.01"></div>
+      <button id="submit" type="submit">Знайти</button>
+    </div>
+  </form>
+  <div id="message" role="status"></div>
+  <section class="columns" aria-live="polite">
+    <div class="column"><div class="column-head"><h2>За змістом</h2><span id="semanticTime"></span></div><div id="semantic"></div></div>
+    <div class="column"><div class="column-head"><h2>За словами</h2><span id="keywordTime"></span></div><div id="keyword"></div></div>
+  </section>
+</main>
+<script>
+const form = document.getElementById("form");
+const submit = document.getElementById("submit");
+const message = document.getElementById("message");
+const filters = { category: "category", product: "product", audience: "audience", status: "statusFilter" };
+
+function showResults(target, payload) {
+  const root = document.getElementById(target);
+  root.replaceChildren();
+  if (!payload.results.length) {
+    root.innerHTML = '<div class="empty">Нічого не знайдено за цими умовами</div>';
+    return;
+  }
+  for (const item of payload.results) {
+    const card = document.createElement("article");
+    card.className = "result";
+    const heading = document.createElement("div");
+    heading.className = "result-top";
+    const title = document.createElement("div");
+    title.className = "result-title";
+    title.textContent = item.metadata.title;
+    const score = document.createElement("span");
+    score.className = "score";
+    score.textContent = item.score.toFixed(4);
+    heading.append(title, score);
+    const source = document.createElement("div");
+    source.className = "source";
+    source.textContent = `${item.source} · ${item.section}`;
+    const excerpt = document.createElement("p");
+    excerpt.className = "excerpt";
+    excerpt.textContent = item.text;
+    const tags = document.createElement("div");
+    tags.className = "tags";
+    for (const value of [item.metadata.category, item.metadata.product, item.metadata.audience, item.metadata.status]) {
+      const tag = document.createElement("span");
+      tag.className = "tag";
+      tag.textContent = value;
+      tags.append(tag);
+    }
+    card.append(heading, source, excerpt, tags);
+    root.append(card);
+  }
+}
+
+async function loadOptions() {
+  const status = await fetch("/api/status").then(response => response.json());
+  document.getElementById("status").textContent = status.message;
+  document.getElementById("dot").style.background = status.ready ? "#27865f" : "#d28b28";
+  document.getElementById("topK").value = status.default_top_k;
+  document.getElementById("topK").max = status.max_top_k;
+  document.getElementById("threshold").value = status.default_min_score;
+  if (!status.ready) message.textContent = status.message;
+  const data = await fetch("/api/filters").then(response => response.json());
+  for (const [key, id] of Object.entries(filters)) {
+    const select = document.getElementById(id);
+    for (const value of data[key]) {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = value;
+      select.append(option);
+    }
+  }
+}
+
+form.addEventListener("submit", async event => {
+  event.preventDefault();
+  submit.disabled = true;
+  message.className = "";
+  message.textContent = "Шукаю…";
+  const body = {
+    query: document.getElementById("query").value,
+    top_k: Number(document.getElementById("topK").value),
+    min_score: Number(document.getElementById("threshold").value),
+  };
+  for (const [key, id] of Object.entries(filters)) body[key] = document.getElementById(id).value || null;
+  try {
+    const response = await fetch("/api/search", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.detail || `Помилка ${response.status}`);
+    showResults("semantic", data.semantic);
+    showResults("keyword", data.keyword);
+    document.getElementById("semanticTime").textContent = `${data.semantic.latency_ms} мс, включно з кодуванням запиту`;
+    document.getElementById("keywordTime").textContent = `${data.keyword.latency_ms} мс`;
+    message.textContent = "Пошук завершено";
+  } catch (error) {
+    message.textContent = error.message;
+    message.className = "error";
+  } finally {
+    submit.disabled = false;
+  }
+});
+
+loadOptions().catch(error => { message.textContent = error.message; message.className = "error"; });
+</script>
+</body>
+</html>
